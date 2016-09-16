@@ -2,7 +2,12 @@ Package: beaverdown
 Title: An updated R Markdown thesis template for Oregon State University using the bookdown package
 Version: 0.0.3
 Authors@R: c(person(c("Zhian", "N."), "Kamvar", email = "zkamvar@gmail.com", role = c("aut", "cre")),
-    person("Chester", "Ismay", email = "chester.ismay@gmail.com", role = c("aut")))
+    person("Chester", "Ismay", email = "chester.ismay@gmail.com", role = c("aut", "ccp")),
+    person("Rick","Treinen", email = "NA", role = c("aut")),
+    person("Neville", "Mehta", email = "neville@lifetime.oregonstate.edu", role = c("aut")),
+    person("Deling", "Ren", email = "deling_ren@lifetime.oregonstate.edu", role = c("aut")),
+    person("John", "Metta", email = "john.pennington@lifetime.oregonstate.edu", role = c("aut", "ccp"))
+    )
 Description: Using the bookdown package and LaTeX and Word thesis templates from
     Oregon State University, this package was derived from Chester Ismay's
     package "thesisdown"
@@ -13,7 +18,7 @@ Depends:
     ggplot2,
     bookdown,
     knitr
-License: MIT
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 5.0.1
