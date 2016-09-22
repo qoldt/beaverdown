@@ -1,3 +1,15 @@
+# beaverdown 0.1.0
+
+## NEW FUNCTIONS
+
+ - `inc()` allows you to include text in the YAML from a file. Note that there
+ should be no markup here.
+ - `render_caption()` allows you to render a caption with markdown formatting.
+
+## NEW FEATURES
+
+ - `thesis_pdf` will now set a default out.width and root.dir
+
 # thesisdown 0.0.2
 
 - Changed default filename (in directions) to be `index` instead of `skeleton` to match with gitbook requirements
