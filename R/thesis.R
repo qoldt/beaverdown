@@ -27,8 +27,10 @@ thesis_pdf <- function(toc = TRUE, toc_depth = 3, ...){
     ...)
 
   # Mostly copied from knitr::render_sweave
-  base$knitr$opts_chunk$comment <- NA
+  base$knitr$opts_chunk$comment   <- NA
   base$knitr$opts_chunk$fig.align <- "center"
+  base$knitr$opts_chunk$out.width <- "0.8\\linewidth"
+  base$knitr$opts_knit$root.dir   <- paste0(normalizePath("."), "/")
   # Not sure if needed?
   base$knitr$knit_hooks$plot <- knitr:::hook_plot_tex
 
