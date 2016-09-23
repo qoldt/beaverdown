@@ -14,6 +14,8 @@
 #'   \code{\link[knitr]{pandoc}}. It allows you to include references in your
 #'   captions, which are not automatically rendered.
 #'
+#' @seealso \code{\link{process_citations}}
+#'
 #' @examples
 #'
 #' # Setup for the example
@@ -27,28 +29,59 @@
 #' # Make sure to set your index to whatever your project is called!
 #' render_caption(caption, index = "skeleton.Rmd")
 #'
-#'
 #' @importFrom yaml yaml.load
-render_caption <- function(caption, figname = "fig1", index = "index.Rmd"){
+render_caption <- function(caption, figname = "fig1", index = "index.Rmd", to = "latex"){
   the_root  <- knitr::opts_knit$get("root.dir")
   yml       <- readLines(file.path(the_root, index))
   yml_lines <- which(yml == "---")[1:2]
-  yml_lines <- seq(f = yml_lines[1] + 1, t = yml_lines[2] - 1, b = 1)
+  yml_lines <- expand_range(yml_lines, 1)
   yml       <- yaml::yaml.load(paste(yml[yml_lines], collapse = "\n"))
+  bib       <- file.path(the_root, yml$bibliography)
+  bib       <- paste(bib, collapse = "\n    ")
+  csl       <- file.path(the_root, yml$csl)
+  return(process_citations(caption, bib, csl, figname, to))
+}
 
+#' Process citations in a text formatted with markdown
+#'
+#' @param caption text formatted with markdown
+#' @param bib the name of the bibliography file(s)
+#' @param csl the name of the csl file
+#' @param figname the name of the output file
+#' @param to the output format. Defaults to "latex". Could also be "html".
+#'   "markdown" does nothing useful.
+#'
+#' @return formatted text with rendered citations
+#' @export
+#'
+#' @seealso \code{\link{render_caption}}
+#'
+#' @examples
+#' # Setup for the example
+#' # Note that this will already be set for you when you run the document
+#' rootdir <- find.package("beaverdown")
+#' rootdir <- paste0(rootdir, "/rmarkdown/templates/oregonstate/skeleton/")
+#' bib <- file.path(rootdir, c("bib/references.bib", "bib/thesis.bib"))
+#' bib <- paste(bib, collapse = "\n    ")
+#' csl <- file.path(rootdir, "csl/apa.csl")
+#' txt <- "**Hey!** This is a citation from @angel2000."
+#' process_citations(txt, bib, csl)
+process_citations <- function(caption, bib, csl, figname = "fig1", to = "latex"){
   tmpdir <- tempdir()
-  bib    <- file.path(the_root, yml$bibliography)
-  bib    <- paste(bib, collapse = "\n    ")
-  csl    <- file.path(the_root, yml$csl)
+  to     <- match.arg(to, c("latex", "markdown", "html"))
+  out    <- switch(to,
+                   latex = ".tex",
+                   markdown = ".md",
+                   html = ".html")
 
   txt <- paste0("<!--pandoc
-t: latex
-s:
+t: ", to,"\n",
+"s:
 mathjax:
 number-sections:
 bibliography: ", bib, "\n",
 "csl: ", csl, "\n",
-"o: ", paste0(tmpdir, "/", figname, ".tex"), "\n",
+"o: ", paste0(tmpdir, "/", figname, out), "\n",
 "-->
 
 CUT=======
@@ -63,7 +96,30 @@ CUT=======
 
   outfile <- knitr::pandoc(intmp)
   tmptxt  <- readLines(outfile)
-  outinds <- which(tmptxt == "CUT=======")
-  inds    <- seq(from = outinds[1] + 2, to = outinds[2] - 2, by = 1)
+  cuttext <- if (out == ".html") "<p>CUT=======</p>" else "CUT======="
+  trim    <- if (out == ".html") 1 else 2
+  outinds <- which(tmptxt == cuttext)
+  inds    <- expand_range(outinds, trim)
   return(paste(tmptxt[inds], collapse = "\n"))
+}
+
+#' Expand the range of a vector of two integers and trim by a certain amount
+#'
+#' @param therange a vector with two elements
+#' @param trim an integer specifying how much to cut off either end.
+#'
+#' @details this is a solution to the problem where you have a pair of indices
+#' that you need to use to grab a range of indices. Sure, you could do the ever
+#' ungraceful \code{x[1]:x[2]}, but that sucks. This is better
+#'
+#' @return a vector
+#'
+#' @noRd
+#'
+#' @examples
+#' x <- c(1, 10)
+#' expand_range(x, trim = 1)
+#' 2:9
+expand_range <- function(therange = c(1, 10), trim = 1){
+  seq(from = therange[1] + trim, to = therange[2] - trim, by = 1)
 }

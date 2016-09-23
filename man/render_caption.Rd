@@ -4,7 +4,8 @@
 \alias{render_caption}
 \title{Render LaTeX captions}
 \usage{
-render_caption(caption, figname = "fig1", index = "index.Rmd")
+render_caption(caption, figname = "fig1", index = "index.Rmd",
+  to = "latex")
 }
 \arguments{
 \item{caption}{the markdown-formatted text you want to render as a figure
@@ -37,7 +38,6 @@ knitr::opts_knit$set(root.dir = rootdir)
 caption <- "This is some *text* to use as a caption [@angel2000]!"
 # Make sure to set your index to whatever your project is called!
 render_caption(caption, index = "skeleton.Rmd")
-
 
 }
 
