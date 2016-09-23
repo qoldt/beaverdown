@@ -29,8 +29,8 @@ thesis_pdf <- function(toc = TRUE, toc_depth = 3, ...){
   # Mostly copied from knitr::render_sweave
   base$knitr$opts_chunk$comment   <- NA
   base$knitr$opts_chunk$fig.align <- "center"
-  base$knitr$opts_chunk$out.width <- "0.8\\linewidth"
-  base$knitr$opts_knit$root.dir   <- paste0(normalizePath("."), "/")
+  base$knitr$opts_chunk$out.width <- "80%"
+  base$knitr$opts_knit$root.dir   <- getwd()
   # Not sure if needed?
   base$knitr$knit_hooks$plot <- knitr:::hook_plot_tex
 
@@ -60,8 +60,10 @@ thesis_gitbook <- function(){
   )
 
   # Mostly copied from knitr::render_sweave
-  base$knitr$opts_chunk$comment <- NA
+  base$knitr$opts_chunk$comment   <- NA
   base$knitr$opts_chunk$fig.align <- "center"
+  base$knitr$opts_chunk$out.width <- "80%"
+  base$knitr$opts_knit$root.dir   <- getwd()
 
   base
 
@@ -84,8 +86,10 @@ thesis_word <- function(){
   base <- bookdown::word_document2()
 
   # Mostly copied from knitr::render_sweave
-  base$knitr$opts_chunk$comment <- NA
+  base$knitr$opts_chunk$comment   <- NA
   base$knitr$opts_chunk$fig.align <- "center"
+  base$knitr$opts_chunk$out.width <- "80%"
+  base$knitr$opts_knit$root.dir   <- getwd()
 
   base
 
@@ -107,9 +111,10 @@ thesis_epub <- function(){
   base <- bookdown::epub_book()
 
   # Mostly copied from knitr::render_sweave
-  base$knitr$opts_chunk$comment <- NA
+  base$knitr$opts_chunk$comment   <- NA
   base$knitr$opts_chunk$fig.align <- "center"
-
+  base$knitr$opts_chunk$out.width <- "80%"
+  base$knitr$opts_knit$root.dir   <- getwd()
   base
 
 }
