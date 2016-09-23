@@ -30,8 +30,12 @@ Process citations in a text formatted with markdown
 rootdir <- find.package("beaverdown")
 rootdir <- paste0(rootdir, "/rmarkdown/templates/oregonstate/skeleton/")
 bib <- file.path(rootdir, c("bib/references.bib", "bib/thesis.bib"))
+bib <- paste(bib, collapse = "\\n    ")
 csl <- file.path(rootdir, "csl/apa.csl")
 txt <- "**Hey!** This is a citation from @angel2000."
 process_citations(txt, bib, csl)
+}
+\seealso{
+\code{\link{render_caption}}
 }
 

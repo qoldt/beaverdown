@@ -1,3 +1,10 @@
+# beaverdown 0.2.0
+
+## NEW FUNCTIONS
+
+ - `process_citations()` is used by `render_caption()` internally and allows one
+ to process text with citations using any bib or csl.
+
 # beaverdown 0.1.0
 
 ## NEW FUNCTIONS

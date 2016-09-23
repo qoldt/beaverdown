@@ -40,4 +40,7 @@ caption <- "This is some *text* to use as a caption [@angel2000]!"
 render_caption(caption, index = "skeleton.Rmd")
 
 }
+\seealso{
+\code{\link{process_citations}}
+}
 
