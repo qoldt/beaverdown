@@ -100,7 +100,13 @@ CUT=======
   trim    <- if (out == ".html") 1 else 2
   outinds <- which(tmptxt == cuttext)
   inds    <- expand_range(outinds, trim)
-  return(paste(tmptxt[inds], collapse = "\n"))
+  if (out == ".html"){
+    tmptxt <- paste(tmptxt[inds], collapse = "\n")
+    return(substr(tmptxt, 4, nchar(tmptxt) - 4))
+  } else {
+    return(paste(tmptxt[inds], collapse = "\n"))
+  }
+
 }
 
 #' Expand the range of a vector of two integers and trim by a certain amount
