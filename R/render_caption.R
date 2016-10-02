@@ -37,16 +37,15 @@ render_caption <- function(caption, figname = "fig1", index = "index.Rmd", to = 
   yml_lines <- expand_range(yml_lines, 1)
   yml       <- yaml::yaml.load(paste(yml[yml_lines], collapse = "\n"))
   bib       <- file.path(the_root, yml$bibliography)
-  bib       <- paste(bib, collapse = "\n    ")
-  csl       <- file.path(the_root, yml$csl)
-  return(process_citations(caption, bib, csl, figname, to))
+  yml$bibliography <- paste(bib, collapse = "\n    ")
+  yml$csl          <- file.path(the_root, yml$csl)
+  return(process_citations(caption, yml, figname, to))
 }
 
 #' Process citations in a text formatted with markdown
 #'
 #' @param caption text formatted with markdown
-#' @param bib the name of the bibliography file(s)
-#' @param csl the name of the csl file
+#' @param yml a list of yaml metadata
 #' @param figname the name of the output file
 #' @param to the output format. Defaults to "latex". Could also be "html".
 #'   "markdown" does nothing useful.
@@ -65,22 +64,24 @@ render_caption <- function(caption, figname = "fig1", index = "index.Rmd", to = 
 #' bib <- paste(bib, collapse = "\n    ")
 #' csl <- file.path(rootdir, "csl/apa.csl")
 #' txt <- "**Hey!** This is a citation from @angel2000."
-#' process_citations(txt, bib, csl)
-process_citations <- function(caption, bib, csl, figname = "fig1", to = "latex"){
+#' yml <- list(bibliography = bib, csl = csl, `link-citations` = TRUE)
+#' process_citations(txt, yml)
+process_citations <- function(caption, yml, figname = "fig1", to = "latex"){
   tmpdir <- tempdir()
   to     <- match.arg(to, c("latex", "markdown", "html"))
   out    <- switch(to,
                    latex = ".tex",
                    markdown = ".md",
                    html = ".html")
-
+  linkcite <- if (yml$`link-citations`) "true" else "false"
   txt <- paste0("<!--pandoc
 t: ", to,"\n",
 "s:
 mathjax:
 number-sections:
-bibliography: ", bib, "\n",
-"csl: ", csl, "\n",
+bibliography: ", yml$bibliography, "\n",
+"csl: ", yml$csl, "\n",
+"metadata: link-citations=", linkcite, "\n",
 "o: ", paste0(tmpdir, "/", figname, out), "\n",
 "-->
 

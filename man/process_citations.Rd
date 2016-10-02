@@ -4,14 +4,12 @@
 \alias{process_citations}
 \title{Process citations in a text formatted with markdown}
 \usage{
-process_citations(caption, bib, csl, figname = "fig1", to = "latex")
+process_citations(caption, yml, figname = "fig1", to = "latex")
 }
 \arguments{
 \item{caption}{text formatted with markdown}
 
-\item{bib}{the name of the bibliography file(s)}
-
-\item{csl}{the name of the csl file}
+\item{yml}{a list of yaml metadata}
 
 \item{figname}{the name of the output file}
 
@@ -33,7 +31,8 @@ bib <- file.path(rootdir, c("bib/references.bib", "bib/thesis.bib"))
 bib <- paste(bib, collapse = "\\n    ")
 csl <- file.path(rootdir, "csl/apa.csl")
 txt <- "**Hey!** This is a citation from @angel2000."
-process_citations(txt, bib, csl)
+yml <- list(bibliography = bib, csl = csl, `link-citations` = TRUE)
+process_citations(txt, yml)
 }
 \seealso{
 \code{\link{render_caption}}
