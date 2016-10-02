@@ -40,7 +40,7 @@ bibliography: ['bib/references.bib', 'bib/thesis.bib']
 # Download your specific bibliography database file and refer to it in the line above.
 csl: csl/apa.csl
 # Download your specific csl file and refer to it in the line above.
-link-citations:yes
+link-citations: yes
 # This not only makes the citations clickable, but in the HTML version, the bibliography
 # can be placed at the end of the chapter.
 # header-includes:
