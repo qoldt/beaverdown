@@ -1,3 +1,12 @@
+# beaverdown 0.2.1
+
+## NEW FEATURES
+
+ - The option `link-citations: yes` is added to the YAML metadata. Now, when the
+   PDF is rendered, citations will be linked AND when the html book is rendered, 
+   citations will be moved to the end of the chapter.
+ - update `render_caption()` so that it includes the `link-citations` metadata
+
 # beaverdown 0.2.0
 
 ## NEW FUNCTIONS
