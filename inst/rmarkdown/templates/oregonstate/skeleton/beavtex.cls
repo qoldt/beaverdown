@@ -750,10 +750,10 @@
       \parfillskip -\@pnumwidth
       \leavevmode %\large
       \advance\leftskip\@tempdima
-      \hskip -\leftskip
       % ZNK: Add singlespacing here for long titles
       % http://tex.stackexchange.com/a/181406/77699
       \singlespacing
+      \hskip -\leftskip
 %     #1\nobreak\hfil \nobreak\hb@xt@\@pnumwidth{\hss #2}\par  %Old version without dots in the Chapter part of the TOC
       #1\nobreak\normalfont\leaders\hbox{$\m@th
         \mkern \@dotsep mu\hbox{.}\mkern \@dotsep
