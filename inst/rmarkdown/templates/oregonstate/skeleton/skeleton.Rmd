@@ -28,7 +28,8 @@ advisor: 'Jane R. Professor'
 knit: "bookdown::render_book"
 site: bookdown::bookdown_site
 output: 
-  beaverdown::thesis_pdf: default
+  beaverdown::thesis_pdf: 
+    pandoc_args: --top-level-division=chapter
 #  beaverdown::thesis_gitbook: default
 #  beaverdown::thesis_word: default
 #  beaverdown::thesis_epub: default
