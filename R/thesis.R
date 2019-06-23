@@ -22,7 +22,7 @@ thesis_pdf <- function(toc = TRUE, toc_depth = 3, ...){
     toc = toc,
     toc_depth = toc_depth,
     highlight = "pygments",
-    keep_tex = TRUE
+    keep_tex = TRUE,
     ...)
 
   # Mostly copied from knitr::render_sweave
